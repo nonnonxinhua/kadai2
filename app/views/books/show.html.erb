@@ -1,0 +1,19 @@
+<% if flash[:notice] %>
+ <div style="color:green;"class="alert alert-primary" role="alert">
+    <%= notice %>
+ </div>
+<% end %>
+
+<p>
+  <strong>Title:</strong>
+  <%= @book.title %>
+</p>
+<p>
+  <strong>Body:</strong>
+  <%= @book.body %>
+</p>
+<div>
+  <%= link_to"edit",edit_book_path(@book) %>
+  <%= link_to"back",books_path %>
+</div>
+
