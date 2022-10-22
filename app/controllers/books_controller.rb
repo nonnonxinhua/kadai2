@@ -1,14 +1,15 @@
 class BooksController < ApplicationController
 # 以下を追加
   def create
-    # １.&2. データを受け取り新規登録するためのインスタンス作成
-    book = Book.new(book_params)
-    # 3. データをデータベースに保存するためのsaveメソッド実行
-    book.save
-    # 4. トップ画面へリダイレクト
-    # TODO: bookのshow pageに移動したい
-    redirect_to book_path(book.id), notice: "Book was successfully created."
 
+  @book = Book.new(book_params)
+    if @book.save
+      redirect_to book_path(@book.id), notice: "Book was successfully created."
+    else
+       @books = Book.all
+       render :index
+
+    end
   end
 
   def index
@@ -34,11 +35,14 @@ class BooksController < ApplicationController
     #   end
 
   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id), notice: "Book was successfully updated."
+    @book = Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to book_path(@book.id), notice: "Book was successfully updated."
+  else
+    render :edit
   end
-
+  end
+    
   private
   # ストロングパラメータ
   def book_params
